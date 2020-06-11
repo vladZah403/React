@@ -1,45 +1,54 @@
 import React from 'react';
-
+import ToDoList from '../to-do-list';
+import Statistic from '../statistic';
+import ToDoForm from '../to-do-form';
 import './app.css';
 
-const todoStyle = {
-    fontFamily: 'Arial',
-    listStyleType: 'none',
-    fontSize: '18pt'
-}
+
 function App(){
     const todos = [
         {
             text: 'listen a new audio book',
-            isDone: false
+            isDone: false,
+            id: 1,
+            isImportant: false
         },
         {
             text: 'Repair a car',
-            isDone: true
+            isDone: true,
+            id: 2,
+            isImportant: false
         },
         {
             text: 'Have a lanch',
-            isDone: false
+            isDone: false,
+            id: 3,
+            isImportant: true
         },
         {
             text: 'look a new film',
-            isDone: true
+            isDone: true,
+            id: 4,
+            isImportant: false
         }
     ]
 
+    const allTasks = todos.length;
+    let doneTasks = todos.reduce((counter,{isDone}) => counter+=isDone? 1: 0, 0)
+        
     
     return(
-        <div>
-            <ul style ={ todoStyle }>
-                <li className={ todos[0].isDone ? 'done' : null }>{ todos[0].text}</li>
-                <li className={ todos[1].isDone ? 'done' : null }>{ todos[1].text}</li>
-                <li className={ todos[2].isDone ? 'done' : null }>{ todos[2].text}</li>
-                <li className={ todos[3].isDone ? 'done' : null }>{ todos[3].text}</li>
-            </ul>
-            <p>{todos.length}</p>
+        <div className ="app">
+            <Statistic 
+            all ={allTasks} 
+            done ={doneTasks} />
+            <ToDoForm/>
+            <ToDoList 
+                data ={todos}
+                />
         </div>    
     );
         
-}
+    }
 
 export default App;
