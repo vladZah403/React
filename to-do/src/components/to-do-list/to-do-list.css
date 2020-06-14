@@ -1,9 +1,10 @@
-div.toDolist{
+.toDoList{
     list-style-type: none;
     font: 18pt Arial;
+    
 };
 
-div.toDolist .done{
+li.done{
     text-decoration: line-through;
     
 }
