@@ -12,6 +12,7 @@ function Statistic(props){
     <div>
         <span className ="badge badge-success">DONE:{done}</span>
         <span className ="badge badge-dark">ALL:{all}</span>
+        
         <div className="progress mt-1 mb-1">
             <div className="progress-bar progress-bar-striped bg-warning " 
                 style={progress}

@@ -37,8 +37,8 @@ export default class App extends Component{
 
     dbFirstInit(){
          const req = window.indexedDB.open('tasksBank', 1);
-        req.onupgredeneeded = ev =>{
-            const objStore = ev.terget.result.createObjectStore('tasks',{
+        req.onupgradeneeded = ev =>{
+             ev.target.result.createObjectStore('tasks',{
                 keyPath : "id"
             });
 
@@ -83,6 +83,9 @@ export default class App extends Component{
                     this.stateInit(transRead)
                     break;
                 }
+                default :{
+                    console.log('hh');
+                }
             }
         }
     }
@@ -92,7 +95,7 @@ export default class App extends Component{
         todos2.forEach(el => {
             if(el.id === id){
                 el.isDone = !el.isDone;
-                
+                this.dbUpdate(el);
             }
                 
             });
@@ -104,20 +107,25 @@ export default class App extends Component{
         todos2.forEach(el => {
             if(el.id === id){
                 el.isImportant = !el.isImportant
-                ;
+                this.dbUpdate(el);
             }
         });
         this.setState({ todos : todos2 })
     }
 
-    onAddItem = () =>{
+    onAddItem = (text) =>{
         console.log('add item');
         const todos = [...this.state.todos];
-        todos.unshift(this.genereteItem());
-        this.setState({todos})
+        const item = this.genereteItem(text);
+        todos.unshift(item);
+        this.dbAdd(item);
+        this.setState({todos});
     }
 
-    genereteItem(text = 'defult'){
+    genereteItem(text ){
+        if( text.length === 0){
+            text = ' emply task'
+        }
         const id = this.state.maxId + 1;
         this.setState({maxId : id});
         return{
@@ -131,6 +139,7 @@ export default class App extends Component{
     onDeleteItemClick = id =>{
         const todos =[...this.state.todos].filter(el => el.id !== id);
         this.setState({todos})
+        this.dbDelete(id)
     }
     
    
